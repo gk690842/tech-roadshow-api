@@ -1,0 +1,28 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Registration Successful</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h2>✅ Registration Successful</h2>
+    <p id="summary"></p>
+
+    <a href="game-overview.html">
+      <button>Proceed to Game Overview</button>
+    </a>
+  </div>
+
+  <script>
+    const user = JSON.parse(localStorage.getItem("user"));
+
+    document.getElementById("summary").innerHTML = `
+      <strong>Name:</strong> ${user.name}<br>
+      <strong>User ID:</strong> ${user.userid}<br>
+      <strong>Registration Number:</strong> ${user.registrationNumber}
+    `;
+  </script>
+</body>
+</html>
