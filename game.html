@@ -1,0 +1,35 @@
+
+<div class="container">
+  <h2>🎮 Enter Scores</h2>
+
+  <input id="userid" placeholder="User ID">
+
+  <input id="g1" placeholder="Game 1 Score">
+  <input id="g2" placeholder="Game 2 Score">
+  <input id="g3" placeholder="Game 3 Score">
+  <input id="g4" placeholder="Game 4 Score">
+
+  <button onclick="submitScore()">Submit Score</button>
+
+  <p id="msg"></p>
+</div>
+
+<script>
+function submitScore() {
+  fetch("https://tech-roadshow-api.gk690842.workers.dev/submit-score", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({
+      userId: document.getElementById("userid").value,
+      g1: Number(g1.value),
+      g2: Number(g2.value),
+      g3: Number(g3.value),
+      g4: Number(g4.value)
+    })
+  })
+  .then(res => res.json())
+  .then(() => {
+    document.getElementById("msg").innerText = "✅ Score Submitted";
+  });
+}
+</script>
