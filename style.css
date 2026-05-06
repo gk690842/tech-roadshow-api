@@ -238,3 +238,9 @@ em {
   flex: 1;
   padding: 30px;
 }
+
+button {
+  pointer-events: auto !important;
+  opacity: 1 !important;
+}
+
