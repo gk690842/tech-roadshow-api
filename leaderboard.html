@@ -7,38 +7,55 @@
 </head>
 <body>
 
-<div class="container">
-  <h2>🏆 Leaderboard</h2>
+<div class="page-layout">
 
-  <table id="leaderboardTable">
-    <thead>
-      <tr>
-        <th>Rank</th>
-        <th>Name</th>
-        <th>User ID</th>
-        <th>Total Score</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h3>InfoSec Booth</h3>
+
+    <a href="register.html">1) Register Yourself</a>
+    <a href="leaderboard.html">2) Leaderboard</a>
+    <a href="#">3) Admin Portal</a>
+  </div>
+
+  <!-- Content -->
+  <div class="content">
+    <div class="container">
+      <h2>🏆 Leaderboard</h2>
+
+      <table border="1" width="100%">
+        <thead>
+          <tr>
+            <th>Rank</th>
+            <th>Name</th>
+            <th>User ID</th>
+            <th>Total Score</th>
+            <th>Reward</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+      </table>
+    </div>
+  </div>
+
 </div>
 
 <script>
 fetch("https://tech-roadshow-api.gk690842.workers.dev/leaderboard")
   .then(res => res.json())
   .then(data => {
-    const table = document.querySelector("tbody");
+    const table = document.getElementById("tableBody");
 
-    data.forEach((user, index) => {
-      const row = `
+    data.forEach((user, i) => {
+      table.innerHTML += `
         <tr>
-          <td>${index + 1}</td>
+          <td>${i+1}</td>
           <td>${user.name}</td>
           <td>${user.user_id}</td>
-          <td>${user.total_score}</td>
+          <td>${user.total_score || 0}</td>
+          <td>${user.gift}</td>
         </tr>
       `;
-      table.innerHTML += row;
     });
   });
 </script>
