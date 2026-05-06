@@ -189,3 +189,52 @@ em {
     font-size: 30px;
   }
 }
+
+/* Sidebar Layout */
+.page-layout {
+  display: flex;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 250px;
+  background: #020617;
+  padding: 20px;
+  height: 100vh;
+  border-right: 2px solid #1e293b;
+}
+
+.sidebar h3 {
+  color: #22c55e;
+  margin-bottom: 20px;
+}
+
+.sidebar a {
+  display: block;
+  padding: 15px;
+  margin-bottom: 10px;
+  background: #1e293b;
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+.sidebar a:hover {
+  background: #22c55e;
+  color: black;
+}
+
+/* Disabled Menu */
+.sidebar .disabled {
+  background: #374151;
+  color: #9ca3af;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+/* Content Area */
+.content {
+  flex: 1;
+  padding: 30px;
+}
