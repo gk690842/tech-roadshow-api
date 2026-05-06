@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -5,17 +6,34 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="container">
-    <h2>Registration</h2>
 
-    <input type="text" id="name" placeholder="Enter your name">
-    <input type="text" id="userid" placeholder="Enter your User ID">
+<div class="page-layout">
 
-    <p id="error" class="error"></p>
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h3>InfoSec Booth</h3>
 
-    <button onclick="registerUser()">Next</button>
+    <a href="register.html">1) Register Yourself</a>
+    <a class="disabled">2) Leaderboard</a>
+    <a class="disabled">3) Admin Portal</a>
   </div>
 
-  <script src="script.js"></script>
+  <!-- Main Content -->
+  <div class="content">
+    <div class="container">
+      <h2>Register Yourself</h2>
+
+      <input type="text" id="name" placeholder="Enter Name">
+      <input type="text" id="userid" placeholder="Enter User ID">
+
+      <p id="error" class="error"></p>
+
+      <button onclick="registerUser()">Register</button>
+    </div>
+  </div>
+
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>
