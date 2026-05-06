@@ -2,16 +2,31 @@
 // =====================================
 // ✅ REGISTER USER FUNCTION
 // =====================================
+
 function registerUser() {
+  console.log("✅ Register button clicked");  // ADD THIS
+
   const name = document.getElementById("name").value.trim();
   const userid = document.getElementById("userid").value.trim();
-  const error = document.getElementById("error");
 
-  // ✅ Input validation
   if (!name || !userid) {
-    error.textContent = "❌ Both fields are mandatory.";
+    alert("Please fill all fields");
     return;
   }
+
+  fetch("https://tech-roadshow-api.gk690842.workers.dev/", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({ name, userId: userid })
+  })
+  .then(res => res.json())
+  .then(data => {
+    localStorage.setItem("isRegistered", "true");
+    window.location.href = "success.html";
+  })
+  .catch(() => alert("Error"));
+}
+
 
   error.textContent = "";
 
