@@ -2,27 +2,48 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Registration Successful</title>
+  <title>Success</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="container">
-    <h2>✅ Registration Successful</h2>
-    <p id="summary"></p>
 
-    <a href="game-overview.html">
-      <button>Proceed to Game Overview</button>
-    </a>
+<div class="page-layout">
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h3>InfoSec Booth</h3>
+
+    <a href="register.html">1) Register Yourself</a>
+    <a href="leaderboard.html">2) Leaderboard</a>
+    <a href="#">3) Admin Portal</a>
   </div>
 
-  <script>
-    const user = JSON.parse(localStorage.getItem("user"));
+  <!-- Content -->
+  <div class="content">
+    <div class="container">
+      <h2>✅ Registration Successful</h2>
 
-    document.getElementById("summary").innerHTML = `
-      <strong>Name:</strong> ${user.name}<br>
-      <strong>User ID:</strong> ${user.userid}<br>
-      <strong>Registration Number:</strong> ${user.registrationNumber}
-    `;
-  </script>
+      <p id="summary"></p>
+
+      <a href="leaderboard.html">
+        <button>Proceed to Leaderboard</button>
+      </a>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const name = localStorage.getItem("name");
+const userid = localStorage.getItem("userid");
+const reg = localStorage.getItem("registrationNumber");
+
+document.getElementById("summary").innerHTML = `
+  <strong>Name:</strong> ${name} <br>
+  <strong>User ID:</strong> ${userid} <br>
+  <strong>Registration Number:</strong> ${reg}
+`;
+</script>
+
 </body>
 </html>
