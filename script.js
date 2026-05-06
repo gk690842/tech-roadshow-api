@@ -64,31 +64,30 @@ function isUserRegistered() {
 // =====================================
 // ✅ ENABLE / DISABLE SIDEBAR OPTIONS
 // =====================================
+
 function controlSidebar() {
 
-  const isRegistered = isUserRegistered();
-
+  // ✅ Only control sidebar links, not buttons
   const leaderboard = document.getElementById("nav-leaderboard");
   const admin = document.getElementById("nav-admin");
 
-  if (leaderboard && admin) {
+  const isRegistered = localStorage.getItem("isRegistered") === "true";
 
-    if (isRegistered) {
-      // ✅ Enable sidebar
-      leaderboard.classList.remove("disabled");
-      admin.classList.remove("disabled");
+  if (!leaderboard || !admin) return;
 
-      leaderboard.style.pointerEvents = "auto";
-      admin.style.pointerEvents = "auto";
+  if (isRegistered) {
+    leaderboard.classList.remove("disabled");
+    admin.classList.remove("disabled");
 
-    } else {
-      // ❌ Disable sidebar (before registration)
-      leaderboard.classList.add("disabled");
-      admin.classList.add("disabled");
+    leaderboard.href = "leaderboard.html";
+    admin.href = "#";
 
-      leaderboard.style.pointerEvents = "none";
-      admin.style.pointerEvents = "none";
-    }
+  } else {
+    leaderboard.classList.add("disabled");
+    admin.classList.add("disabled");
+
+    leaderboard.removeAttribute("href");
+    admin.removeAttribute("href");
   }
 }
 
