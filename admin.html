@@ -1,0 +1,147 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Admin Portal</title>
+<link rel="stylesheet" href="style.css">
+<script src="app.js"></script>
+</head>
+
+<body onload="checkUser()">
+
+<div class="topbar" id="topbar"></div>
+
+<div class="page-layout">
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h3>InfoSec Booth</h3>
+
+    <a href="register.html">1) Register Yourself</a>
+
+    <a onclick="toggleGames()">2) Game Overview ▼</a>
+    <div class="submenu" id="gameMenu">
+      <a href="game.html">Game 1</a>
+      <a href="game.html">Game 2</a>
+      <a href="game.html">Game 3</a>
+      <a href="game.html">Game 4</a>
+    </div>
+
+    <a href="leaderboard.html">3) Leader Board</a>
+    <a href="#">4) Live Dashboard</a>
+    <a href="admin.html">5) Admin Portal</a>
+  </div>
+
+  <!-- Content -->
+  <div class="content">
+
+    <!-- LOGIN -->
+    <div class="container" id="loginSection">
+      <h2>🔒 Admin Login</h2>
+
+      <input type="text" id="adminUser" placeholder="Username"><br><br>
+      <input type="password" id="adminPass" placeholder="Password"><br><br>
+
+      <button onclick="adminLogin()">Login</button>
+
+      <p id="loginError" style="color:red;"></p>
+    </div>
+
+    <!-- ADMIN PANEL -->
+    <div class="container" id="adminPanel" style="display:none;">
+      <h2>⚙️ Modify User Scores</h2>
+
+      <!-- 🔍 SEARCH -->
+      <h3>🔍 Search User</h3>
+      <input id="searchInput" placeholder="Enter Name or User ID"><br><br>
+      <button onclick="searchUser()">Search</button>
+
+      <p id="searchResult" style="color:green;"></p>
+
+      <hr>
+
+      <!-- USER EDIT -->
+      <input id="userid" placeholder="User ID"><br><br>
+
+      <input id="g1" placeholder="Game 1 Score"><br><br>
+      <input id="g2" placeholder="Game 2 Score"><br><br>
+      <input id="g3" placeholder="Game 3 Score"><br><br>
+      <input id="g4" placeholder="Game 4 Score"><br><br>
+
+      <button onclick="updateScore()">Update Score</button>
+
+      <p id="msg"></p>
+    </div>
+
+  </div>
+</div>
+
+<script>
+// ✅ LOGIN
+function adminLogin() {
+  const user = document.getElementById("adminUser").value;
+  const pass = document.getElementById("adminPass").value;
+
+  if (user === "Superman" && pass === "Infosec$booth2026") {
+    document.getElementById("loginSection").style.display = "none";
+    document.getElementById("adminPanel").style.display = "block";
+  } else {
+    document.getElementById("loginError").innerText = "Invalid Credentials!";
+  }
+}
+
+
+// ✅ SEARCH USER FROM API
+function searchUser() {
+  const query = document.getElementById("searchInput").value.toLowerCase();
+
+  fetch("https://tech-roadshow-api.gk690842.workers.dev/leaderboard")
+    .then(res => res.json())
+    .then(data => {
+
+      let user = data.find(u =>
+        u.name.toLowerCase().includes(query) ||
+        u.user_id.toLowerCase().includes(query)
+      );
+
+      if (user) {
+        document.getElementById("searchResult").innerText =
+          "✅ User Found: " + user.name;
+
+        // Auto-fill fields
+        document.getElementById("userid").value = user.user_id;
+
+        // If individual game scores NOT available, divide approx
+        document.getElementById("g1").value = "";
+        document.getElementById("g2").value = "";
+        document.getElementById("g3").value = "";
+        document.getElementById("g4").value = "";
+      } else {
+        document.getElementById("searchResult").innerText = "❌ User not found";
+      }
+    });
+}
+
+
+// ✅ UPDATE SCORE
+function updateScore() {
+  const userId = document.getElementById("userid").value;
+
+  const g1 = Number(document.getElementById("g1").value || 0);
+  const g2 = Number(document.getElementById("g2").value || 0);
+  const g3 = Number(document.getElementById("g3").value || 0);
+  const g4 = Number(document.getElementById("g4").value || 0);
+
+  let total = g1 + g2 + g3 + g4;
+
+  // Store locally
+  localStorage.setItem("score_" + userId, total);
+
+  document.getElementById("msg").innerText =
+    "✅ Score Updated for User: " + userId + " (Total: " + total + ")";
+}
+
+</script>
+
+</body>
+</html>
