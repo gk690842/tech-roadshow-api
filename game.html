@@ -1,35 +1,74 @@
 
-<div class="container">
-  <h2>🎮 Enter Scores</h2>
+<!DOCTYPE html>
+<html>
+<head>
+<title>Game</title>
+<link rel="stylesheet" href="style.css">
+</head>
 
-  <input id="userid" placeholder="User ID">
+<body onload="checkUser()">
 
-  <input id="g1" placeholder="Game 1 Score">
-  <input id="g2" placeholder="Game 2 Score">
-  <input id="g3" placeholder="Game 3 Score">
-  <input id="g4" placeholder="Game 4 Score">
+<div class="topbar" id="topbar"></div>
 
-  <button onclick="submitScore()">Submit Score</button>
+<div class="page-layout">
 
-  <p id="msg"></p>
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h3>InfoSec Booth</h3>
+
+    <a href="register.html">1) Register Yourself</a>
+
+    <a onclick="toggleGames()">2) Game Overview ▼</a>
+
+    <div class="submenu" id="gameMenu">
+      <a href="game.html">Game 1</a>
+      <a href="game.html">Game 2</a>
+      <a href="game.html">Game 3</a>
+      <a href="game.html">Game 4</a>
+    </div>
+
+    <a href="#">3) Leader Board</a>
+    <a href="#">4) Live Dashboard</a>
+    <a href="#">5) Admin Portal</a>
+  </div>
+
+  <!-- Content -->
+  <div class="content">
+
+    <div class="container">
+      <h2>🎮 Enter Scores</h2>
+
+      <input id="userid" placeholder="User ID"><br><br>
+      <input id="g1" placeholder="Game 1 Score"><br><br>
+      <input id="g2" placeholder="Game 2 Score"><br><br>
+      <input id="g3" placeholder="Game 3 Score"><br><br>
+      <input id="g4" placeholder="Game 4 Score"><br><br>
+
+      <button onclick="submitScore()">Submit Score</button>
+
+      <p id="msg"></p>
+    </div>
+
+  </div>
+
 </div>
+
+<script src="app.js"></script>
 
 <script>
 function submitScore() {
-  fetch("https://tech-roadshow-api.gk690842.workers.dev/submit-score", {
-    method: "POST",
-    headers: {"Content-Type": "application/json"},
-    body: JSON.stringify({
-      userId: document.getElementById("userid").value,
-      g1: Number(g1.value),
-      g2: Number(g2.value),
-      g3: Number(g3.value),
-      g4: Number(g4.value)
-    })
-  })
-  .then(res => res.json())
-  .then(() => {
-    document.getElementById("msg").innerText = "✅ Score Submitted";
-  });
+  let total =
+    Number(g1.value) +
+    Number(g2.value) +
+    Number(g3.value) +
+    Number(g4.value);
+
+  localStorage.setItem("score", total);
+
+  document.getElementById("msg").innerText = "✅ Score Saved Locally";
+  checkUser();
 }
 </script>
+
+</body>
+</html>
