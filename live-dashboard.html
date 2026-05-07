@@ -1,0 +1,187 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Live Dashboard</title>
+
+<link rel="stylesheet" href="style.css">
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script src="app.js"></script>
+</head>
+
+<body onload="initDashboard()">
+
+<!-- Top User Info -->
+<div class="topbar" id="topbar"></div>
+
+<div class="page-layout">
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h3>InfoSec Booth</h3>
+
+    <a href="register.html">1) Register Yourself</a>
+
+    <a onclick="toggleGames()">2) Game Overview ▼</a>
+    <div class="submenu" id="gameMenu">
+      <a href="game.html">Game 1</a>
+      <a href="game.html">Game 2</a>
+      <a href="game.html">Game 3</a>
+      <a href="game.html">Game 4</a>
+    </div>
+
+    <a href="leaderboard.html">3) Leader Board</a>
+    <a href="live-dashboard.html">4) Live Dashboard</a>
+    <a href="admin.html">5) Admin Portal</a>
+  </div>
+
+  <!-- Content -->
+  <div class="content">
+
+    <h1>📊 Live Dashboard</h1>
+
+    <!-- INFO CARDS -->
+    <div style="display:flex; gap:20px; flex-wrap:wrap;">
+      
+      <div style="background:#22c55e; color:white; padding:20px; border-radius:10px;">
+        <h3>Total Players</h3>
+        <h2 id="totalUsers">0</h2>
+      </div>
+
+      <div style="background:#3b82f6; color:white; padding:20px; border-radius:10px;">
+        <h3>Highest Score</h3>
+        <h2 id="topScore">0</h2>
+      </div>
+
+      <div style="background:#f59e0b; color:white; padding:20px; border-radius:10px;">
+        <h3>Average Score</h3>
+        <h2 id="avgScore">0</h2>
+      </div>
+
+    </div>
+
+    <br><br>
+
+    <!-- TOP 5 USERS -->
+    <h2>🏆 Top 5 Players</h2>
+    <ul id="topPlayers"></ul>
+
+    <br>
+
+    <!-- CHART -->
+    <canvas id="scoreChart" height="100"></canvas>
+
+    <br><br>
+
+    <!-- RECENT USERS TABLE -->
+    <h2>👥 Live Leaderboard Snapshot</h2>
+    <table border="1" width="100%">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>User ID</th>
+          <th>Score</th>
+        </tr>
+      </thead>
+      <tbody id="liveTable"></tbody>
+    </table>
+
+  </div>
+</div>
+
+<script>
+
+let chart;
+
+// ✅ INITIALIZE DASHBOARD
+function initDashboard() {
+  checkUser();
+  loadData();
+
+  // Refresh every 10 seconds
+  setInterval(loadData, 10000);
+}
+
+// ✅ FETCH DATA FROM API
+function loadData() {
+  fetch("https://tech-roadshow-api.gk690842.workers.dev/leaderboard")
+    .then(res => res.json())
+    .then(data => {
+
+      if (!data || data.length === 0) return;
+
+      // ✅ TOTAL USERS
+      document.getElementById("totalUsers").innerText = data.length;
+
+      // ✅ SORT BY SCORE
+      data.sort((a, b) => (b.total_score || 0) - (a.total_score || 0));
+
+      // ✅ TOP SCORE
+      document.getElementById("topScore").innerText = data[0].total_score || 0;
+
+      // ✅ AVERAGE SCORE
+      let total = data.reduce((sum, u) => sum + (u.total_score || 0), 0);
+      let avg = Math.round(total / data.length);
+      document.getElementById("avgScore").innerText = avg;
+
+      // ✅ TOP 5 PLAYERS
+      let top5 = data.slice(0, 5);
+      let list = document.getElementById("topPlayers");
+      list.innerHTML = "";
+
+      top5.forEach(user => {
+        let li = document.createElement("li");
+        li.innerText = `${user.name} (${user.total_score})`;
+        list.appendChild(li);
+      });
+
+      // ✅ TABLE (Top 10 snapshot)
+      let table = document.getElementById("liveTable");
+      table.innerHTML = "";
+
+      data.slice(0, 10).forEach(user => {
+        table.innerHTML += `
+          <tr>
+            <td>${user.name}</td>
+            <td>${user.user_id}</td>
+            <td>${user.total_score || 0}</td>
+          </tr>
+        `;
+      });
+
+      // ✅ GRAPH (Top 5)
+      let labels = top5.map(u => u.name);
+      let scores = top5.map(u => u.total_score || 0);
+
+      renderChart(labels, scores);
+    });
+}
+
+// ✅ CHART RENDER
+function renderChart(labels, dataVals) {
+
+  if (chart) {
+    chart.destroy();
+  }
+
+  const ctx = document.getElementById("scoreChart").getContext("2d");
+
+  chart = new Chart(ctx, {
+    type: "bar",
+    data: {
+      labels: labels,
+      datasets: [{
+        label: "Top Scores",
+        data: dataVals
+      }]
+    }
+  });
+}
+
+</script>
+
+</body>
+</html>
