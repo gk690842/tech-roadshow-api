@@ -2,6 +2,7 @@
 // =====================================
 // ✅ REGISTER USER FUNCTION
 // =====================================
+
 function registerUser() {
   const name = document.getElementById("name").value.trim();
   const userid = document.getElementById("userid").value.trim();
@@ -11,22 +12,44 @@ function registerUser() {
     return;
   }
 
+  console.log("✅ Sending request...");
+
   fetch("https://tech-roadshow-api.gk690842.workers.dev/", {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ name, userId: userid })
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      name: name,
+      userId: userid
+    })
   })
-    .then(res => res.json())
-    .then(data => {
+    .then(async (res) => {
+      console.log("Response status:", res.status);
+
+      if (!res.ok) {
+        const text = await res.text();
+        throw new Error(text);
+      }
+
+      return res.json();
+    })
+    .then((data) => {
+      console.log("✅ Success:", data);
+
       localStorage.setItem("username", name);
       localStorage.setItem("userid", userid);
       localStorage.setItem("isRegistered", "true");
-      localStorage.setItem("score", 0);
+      localStorage.setItem("registrationNumber", data.registrationNumber);
 
       window.location.href = "success.html";
     })
-    .catch(() => alert("Registration failed"));
+    .catch((err) => {
+      console.error("❌ ERROR:", err);
+      alert("Registration failed. Please try again.");
+    });
 }
+
 
 // =====================================
 // ✅ CHECK USER (TOP RIGHT DISPLAY)
