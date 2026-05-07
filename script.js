@@ -1,9 +1,9 @@
 
 // =====================================
-// ✅ REGISTER USER FUNCTION
+// ✅ REGISTER USER FUNCTION (FIXED)
 // =====================================
-
 function registerUser() {
+
   const name = document.getElementById("name").value.trim();
   const userid = document.getElementById("userid").value.trim();
 
@@ -12,7 +12,7 @@ function registerUser() {
     return;
   }
 
-  console.log("✅ Sending request...");
+  console.log("🚀 Sending registration request...");
 
   fetch("https://tech-roadshow-api.gk690842.workers.dev/", {
     method: "POST",
@@ -24,45 +24,53 @@ function registerUser() {
       userId: userid
     })
   })
-    .then(async (res) => {
-      console.log("Response status:", res.status);
+  .then(async (res) => {
 
-      if (!res.ok) {
-        const text = await res.text();
-        throw new Error(text);
-      }
+    console.log("📡 Response status:", res.status);
 
-      return res.json();
-    })
-    .then((data) => {
-      console.log("✅ Success:", data);
+    const text = await res.text();
+    console.log("📦 Raw response:", text);
 
-      localStorage.setItem("username", name);
-      localStorage.setItem("userid", userid);
-      localStorage.setItem("isRegistered", "true");
-      localStorage.setItem("registrationNumber", data.registrationNumber);
+    if (!res.ok) {
+      throw new Error(text || "Server error");
+    }
 
-      window.location.href = "success.html";
-    })
-    .catch((err) => {
-      console.error("❌ ERROR:", err);
-      alert("Registration failed. Please try again.");
-    });
+    return JSON.parse(text);
+  })
+  .then((data) => {
+
+    console.log("✅ Registration success:", data);
+
+    // ✅ Save user data
+    localStorage.setItem("username", name);
+    localStorage.setItem("userid", userid);
+    localStorage.setItem("isRegistered", "true");
+    localStorage.setItem("registrationNumber", data.registrationNumber);
+
+    // ✅ Redirect
+    window.location.href = "success.html";
+  })
+  .catch((err) => {
+    console.error("❌ ERROR:", err);
+    alert("Registration failed. Please try again.");
+  });
 }
 
 
 // =====================================
-// ✅ CHECK USER (TOP RIGHT DISPLAY)
+// ✅ CHECK USER (TOP BAR)
 // =====================================
 function checkUser() {
   let user = localStorage.getItem("username");
   let score = localStorage.getItem("score") || 0;
 
   let topbar = document.getElementById("topbar");
+
   if (topbar && user) {
     topbar.innerHTML = user + " | Score: " + score;
   }
 }
+
 
 // =====================================
 // ✅ TOGGLE GAME MENU
@@ -75,67 +83,75 @@ function toggleGames() {
     menu.style.display === "block" ? "none" : "block";
 }
 
+
 // =====================================
-// ✅ SIDEBAR CONTROL + LINKING
+// ✅ SIDEBAR CONTROL
 // =====================================
 function setupSidebar() {
+
   const isRegistered = localStorage.getItem("isRegistered") === "true";
 
-  // All nav items
   const navRegister = document.getElementById("nav-register");
   const navGame = document.getElementById("nav-game");
   const navLeaderboard = document.getElementById("nav-leaderboard");
   const navDashboard = document.getElementById("nav-dashboard");
   const navAdmin = document.getElementById("nav-admin");
 
-  // Game submenu links
   const game1 = document.getElementById("nav-game1");
   const game2 = document.getElementById("nav-game2");
   const game3 = document.getElementById("nav-game3");
   const game4 = document.getElementById("nav-game4");
 
-  // ✅ Always available
+  // ✅ always available
   if (navRegister) navRegister.href = "register.html";
 
-  // ✅ BEFORE REGISTRATION (LOCK)
   if (!isRegistered) {
-    [navGame, navLeaderboard, navDashboard, navAdmin, game1, game2, game3, game4]
-      .forEach(el => {
-        if (!el) return;
-        el.classList.add("disabled");
-        el.removeAttribute("href");
-      });
+
+    [
+      navGame, navLeaderboard, navDashboard, navAdmin,
+      game1, game2, game3, game4
+    ].forEach(el => {
+      if (!el) return;
+
+      el.classList.add("disabled");
+      el.removeAttribute("href");
+    });
+
     return;
   }
 
-  // ✅ AFTER REGISTRATION (UNLOCK ALL)
+  // ✅ after registration
   if (navGame) navGame.onclick = toggleGames;
-
   if (navLeaderboard) navLeaderboard.href = "leaderboard.html";
   if (navDashboard) navDashboard.href = "live-dashboard.html";
   if (navAdmin) navAdmin.href = "admin.html";
 
-  // ✅ Game links
   if (game1) game1.href = "game.html";
   if (game2) game2.href = "game.html";
   if (game3) game3.href = "game.html";
   if (game4) game4.href = "game.html";
 
-  // Remove disabled class
-  [navGame, navLeaderboard, navDashboard, navAdmin, game1, game2, game3, game4]
-    .forEach(el => {
-      if (!el) return;
-      el.classList.remove("disabled");
-    });
+  [
+    navGame, navLeaderboard, navDashboard, navAdmin,
+    game1, game2, game3, game4
+  ].forEach(el => {
+    if (!el) return;
+    el.classList.remove("disabled");
+  });
 }
+
 
 // =====================================
 // ✅ LOAD LEADERBOARD
 // =====================================
 function loadLeaderboard() {
+
   fetch("https://tech-roadshow-api.gk690842.workers.dev/leaderboard")
     .then(res => res.json())
     .then(data => {
+
+      console.log("🏆 Leaderboard:", data);
+
       const table = document.getElementById("tableBody");
       if (!table) return;
 
@@ -153,13 +169,16 @@ function loadLeaderboard() {
         `;
       });
     })
-    .catch(() => console.log("Leaderboard load failed"));
+    .catch(err => console.error("Leaderboard error:", err));
 }
 
+
 // =====================================
-// ✅ RUN ON PAGE LOAD
+// ✅ ON PAGE LOAD
 // =====================================
 document.addEventListener("DOMContentLoaded", () => {
+  console.log("✅ Page loaded");
+
   checkUser();
   setupSidebar();
   loadLeaderboard();
