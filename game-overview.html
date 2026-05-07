@@ -2,47 +2,57 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Game Overview – InfoSec Booth</title>
-  <link rel="stylesheet" href="style.css">
+<title>Game Overview</title>
+<link rel="stylesheet" href="style.css">
 </head>
-<body>
-  <div class="container">
-    <h1>Welcome to the InfoSec Booth</h1>
 
-    <p>
-      We are pleased to have you at the InfoSec Booth. As part of this engagement,
-      we invite you to participate in a set of four interactive games designed to
-      enhance awareness and promote secure practices.
-    </p>
+<body onload="checkUser()">
 
-    <p><strong>Participants are encouraged to play all four games to qualify for rewards.</strong></p>
+<div class="topbar" id="topbar"></div>
 
-    <hr>
+<div class="page-layout">
 
-    <h2>Games Overview</h2>
-    <p><strong>Total Score:</strong> 1000 Points</p>
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h3>InfoSec Booth</h3>
 
-    <ul>
-      <li><strong>Game 1 – Difficulty Level 1:</strong> 200 Points</li>
-      <li><strong>Game 2 – Difficulty Level 2:</strong> 225 Points</li>
-      <li><strong>Game 3 – Difficulty Level 3:</strong> 250 Points</li>
-      <li><strong>Game 4 – Difficulty Level 4:</strong> 275 Points</li>
-    </ul>
+    <a href="register.html">1) Register Yourself</a>
 
-    <hr>
+    <a onclick="toggleGames()">2) Game Overview ▼</a>
 
-    <h2>Recognition & Rewards</h2>
+    <div class="submenu" id="gameMenu">
+      <a href="game.html">Game 1</a>
+      <a href="game.html">Game 2</a>
+      <a href="game.html">Game 3</a>
+      <a href="game.html">Game 4</a>
+    </div>
 
-    <ul>
-      <li><strong>Score of 700 points or above:</strong> CyberHero Certification</li>
-      <li><strong>Score above 750 points:</strong> Yoga Bar</li>
-      <li><strong>Score above 850 points:</strong> Notebook</li>
-      <li><strong>Score above 950 points:</strong> Bottle</li>
-    </ul>
-
-    <hr>
-
-    <p><em>Best wishes, and enjoy your time at the Tech Road Show 2026 – InfoSec Booth.</em></p>
+    <a href="#">3) Leader Board</a>
+    <a href="#">4) Live Dashboard</a>
+    <a href="#">5) Admin Portal</a>
   </div>
+
+  <!-- Content -->
+  <div class="content">
+    <div class="container">
+
+      <h1>Welcome to the InfoSec Booth</h1>
+
+      <p>Play all games to earn rewards.</p>
+
+      <h2>Games Overview</h2>
+      <ul>
+        <li>Game 1 - 200 Points</li>
+        <li>Game 2 - 225 Points</li>
+        <li>Game 3 - 250 Points</li>
+        <li>Game 4 - 275 Points</li>
+      </ul>
+
+    </div>
+  </div>
+
+</div>
+
+<script src="app.js"></script>
 </body>
 </html>
