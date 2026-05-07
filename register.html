@@ -2,11 +2,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Register</title>
-  <link rel="stylesheet" href="style.css">
+<title>Register</title>
+<link rel="stylesheet" href="style.css">
 </head>
-<body>
 
+<body>
 <div class="page-layout">
 
   <!-- Sidebar -->
@@ -14,26 +14,36 @@
     <h3>InfoSec Booth</h3>
 
     <a href="register.html">1) Register Yourself</a>
-    <a class="disabled">2) Leaderboard</a>
-    <a class="disabled">3) Admin Portal</a>
+
+    <a class="disabled">2) Game Overview</a>
+    <div class="submenu">
+      <a class="disabled">Game 1</a>
+      <a class="disabled">Game 2</a>
+      <a class="disabled">Game 3</a>
+      <a class="disabled">Game 4</a>
+    </div>
+
+    <a class="disabled">3) Leader Board</a>
+    <a class="disabled">4) Live Dashboard</a>
+    <a class="disabled">5) Admin Portal</a>
   </div>
 
-  <!-- Main Content -->
+  <!-- Content -->
   <div class="content">
     <div class="container">
       <h2>Register Yourself</h2>
 
-      <input type="text" id="name" placeholder="Enter Name">
-      <input type="text" id="userid" placeholder="Enter User ID">
+      <input type="text" id="name" placeholder="Enter Name"><br><br>
+      <input type="text" id="userid" placeholder="Enter User ID"><br><br>
 
-      <p id="error" class="error"></p>
+      <p id="error" style="color:red;"></p>
 
-     <button id="registerBtn" onclick="registerUser()">Register</button>
+      <button onclick="registerUser()">Register</button>
     </div>
   </div>
 
 </div>
 
-<script src="script.js"></script>
+<script src="app.js"></script>
 </body>
 </html>
