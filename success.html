@@ -2,10 +2,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Success</title>
-  <link rel="stylesheet" href="style.css">
+<title>Success</title>
+<link rel="stylesheet" href="style.css">
 </head>
-<body>
+
+<body onload="checkUser()">
+
+<!-- Topbar -->
+<div class="topbar" id="topbar"></div>
 
 <div class="page-layout">
 
@@ -14,8 +18,18 @@
     <h3>InfoSec Booth</h3>
 
     <a href="register.html">1) Register Yourself</a>
-    <a href="leaderboard.html">2) Leaderboard</a>
-    <a href="#">3) Admin Portal</a>
+
+    <a onclick="toggleGames()">2) Game Overview ▼</a>
+    <div class="submenu" id="gameMenu">
+      <a href="game.html">Game 1</a>
+      <a href="game.html">Game 2</a>
+      <a href="game.html">Game 3</a>
+      <a href="game.html">Game 4</a>
+    </div>
+
+    <a href="leaderboard.html">3) Leader Board</a>
+    <a href="#">4) Live Dashboard</a>
+    <a href="#">5) Admin Portal</a>
   </div>
 
   <!-- Content -->
@@ -33,15 +47,15 @@
 
 </div>
 
+<script src="app.js"></script>
+
 <script>
-const name = localStorage.getItem("name");
+const name = localStorage.getItem("username");
 const userid = localStorage.getItem("userid");
-const reg = localStorage.getItem("registrationNumber");
 
 document.getElementById("summary").innerHTML = `
   <strong>Name:</strong> ${name} <br>
-  <strong>User ID:</strong> ${userid} <br>
-  <strong>Registration Number:</strong> ${reg}
+  <strong>User ID:</strong> ${userid}
 `;
 </script>
 
