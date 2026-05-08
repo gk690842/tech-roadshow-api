@@ -244,3 +244,22 @@ button {
   opacity: 1 !important;
 }
 
+
+/* ✅ MAIN BUTTON FIX */
+.main-btn {
+  background-color: #22c55e;
+  color: #020617;   /* ✅ Dark text so it is visible */
+  padding: 14px 30px;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  display: inline-block;
+  margin-top: 20px;
+}
+
+.main-btn:hover {
+  background-color: #16a34a;
+  color: #020617;
+}
