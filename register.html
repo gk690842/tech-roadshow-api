@@ -44,26 +44,9 @@
 
 </div>
 
-                      <script src="script.js"></script>
+ <script src="script.js"></script>
 
-<script>
-fetch("https://tech-roadshow-api.gk690842.workers.dev/leaderboard")
-.then(res => res.json())
-.then(data => {
-  const table = document.getElementById("tableBody");
 
-  data.forEach((user, i) => {
-    table.innerHTML += `
-      <tr>
-        <td>${i + 1}</td>
-        <td>${user.name}</td>
-        <td>${user.user_id}</td>
-        <td>${user.total_score || 0}</td>
-        <td>${user.gift}</td>
-      </tr>
-    `;
-  });
-});
 </script>
 </body>
 </html>
