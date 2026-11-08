@@ -1,67 +1,63 @@
 ---
-import '../styles/global.css';
-import Brand from '../components/Brand.astro';
-import { SITE, ADS, ANALYTICS, PILLARS, PILLAR_KEYS, FOOTER_LINKS } from '../config';
-import { getReviews, areasOf } from '../lib/util';
+import '../styles/global.**s';**mport Brand from '../components/B**nd.astro';
+import { SITE, ADS, AN**YTICS, PILLARS, PILLAR_KEYS, FOOT**_LINKS } from '../config';
+import** getReviews, areasOf** from '../lib/util';
 
-interface Props {
-  title?: string;
-  description?: string;
+interface P**ps {** title?: string;
+  description?: **ring;
   image?: string;
-  noAds?: boolean;
+  noAds?:**oolean;
   noindex?: boolean;
-  jsonLd?: Record<string, unknown>;
+  js**Ld?: Record<string,**nknown>;
 }
-const { title, description = SITE.description, image = '/brand/icon-512.png', noAds = false, noindex = false, jsonLd } = Astro.props;
-const fullTitle = title ? `${title} – ${SITE.name}` : `${SITE.name} – ${SITE.tagline}`;
-const canonical = new URL(Astro.url.pathname, Astro.site ?? SITE.url).href;
-const ogImage = new URL(image, Astro.site ?? SITE.url).href;
-const path = Astro.url.pathname;
-const isHome = path === '/';
-const isExplore = /^\/(reviews|explore|area|review)\//.test(path);
-const areas = areasOf(await getReviews()).slice(0, 6);
-const loadAds = ADS.enabled && !!ADS.client && !noAds;
----
+const { title, descrip**on = SITE.description, image = '/**and/icon-512.png', noAds = false,**oindex = false, js**Ld } = Astro.props;
+const fullTit** = title ? `${**tle} – ${SITE.name}` : `${SITE.na**} – ${SITE.tagline}`;
+const canon**al = new URL(Astro.url.pathname, **t**.site ?? SITE.url).href;
+const og**age = new URL(image, Astro.site ?**SITE.url**href;
+const path = Astro.url.path**me;
+const isHome = path**== '/';
+const isExplore = /^\/(**views|explore|area|review)\//.tes****th);
+const areas = areasOf(await **tReviews()).slice(0,**);
+const loadAds = ADS.enabled &&**!ADS.client && !noAds;
+const gaId** ANALYTICS?.gaId || '';
+const loa*** = !!gaId && !import.meta.env.DEV**---
 <!doctype html>
-<html lang="en-IN">
+<html lang**en-IN">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>{fullTitle}</title>
-  <meta name="description" content={description} />
-  <link rel="canonical" href={canonical} />
-  {noindex && <meta name="robots" content="noindex" />}
-  <meta name="theme-color" content="#5b2a86" />
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-  <link rel="icon" href="/brand/icon-32.png" sizes="32x32" />
-  <link rel="apple-touch-icon" href="/brand/icon-192.png" />
-  <meta property="og:type" content="website" />
-  <meta property="og:site_name" content={SITE.name} />
-  <meta property="og:title" content={fullTitle} />
-  <meta property="og:description" content={description} />
-  <meta property="og:url" content={canonical} />
-  <meta property="og:image" content={ogImage} />
-  <meta name="twitter:card" content="summary_large_image" />
-  <link rel="sitemap" href="/sitemap-index.xml" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  {ADS.client && <meta name="google-adsense-account" content={ADS.client} />}
-  {loadAds && <script async src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADS.client}`} crossorigin="anonymous"></script>}
+  <meta charset="u**-8" />
+  <meta name="vi**port" content="width=device-width**initial-scale=1, viewport-f**=cover" />
+  <title>{fullTitle}</**tle>
+  **eta name="description" content={d**cription} />
+  <link rel="canonic**" href={canonical} />
+  {noindex ** <meta name="robots" content="noi**ex" />}
+  <meta name="theme-color**content="#5b2a86" />
+  <link rel=**con" href="/favicon.svg" type**image/svg+xml" />
+  <link rel="ic**" href="/brand/icon-32.png" sizes**32x32**/>
+  <link rel="apple-touch-icon"**ref="/brand/icon-192.png" />
+  <m**a property="og:type" content="web**te" />
+  <meta property="og**ite_name" content={SITE.name} />
+**<meta property="og:title**content={fullTitle} />
+  <meta pr**erty="og:description" content={de**ription} />
+  <meta property="og:**l" content={canonical} />
+  <me** property="og:image" content={ogI**ge} />
+  <meta name="twitter:card**content="summary_large_image" />
+**<link rel="sitemap" href="/sitema**index.xml" />
+  <link rel="precon**ct" href="https://**nts.googleapis.com" />
+  <link re**"preconnect" href="https://fonts.**tatic.com" cr**sorigin />
+  <link href="https://**nts.googleapis.com/css2?family=Ca**at:wght@700&family**oppins:wght@400;500;600;700&displ**=swap" rel**stylesheet" />
+  {ADS.client && <**ta name="google-adsense-account" **ntent={ADS.client} />}** {loadAds && <script is:inline async src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADS.client}`} crossorigin="anonymous"></script>}
   {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
-  {ANALYTICS.gaID && !import.meta.env.DEV && (
-    <>
-     <script async src={`https://www.googletagmanager.com/gtag/js?
-     id=${ANALYTICS.gaID}`}></script>
-     <script is:inline set:html={``
-      window.dataLayer = window.datalayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      window.gtag = gtag;
-      gtag('js', new Date());
-      gtag('config', '${ANALYTICS.gaID}');
-      `} />
-      </>
-    )}
+
+  <!-- Google Analytics 4 (live site only, not on your Mac) -->
+  {loadGA && <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}></script>}
+  {loadGA && (
+    <script is:inline define:vars={{ gaId }}>
+      window.dataLayer = window.dataLayer || [];
+      window.gtag = function () { window.dataLayer.push(arguments); };
+      window.gtag('js', new Date());
+      window.gtag('config', gaId);
+    </script>
+  )}
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
