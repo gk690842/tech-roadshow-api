@@ -13,8 +13,8 @@ export const SITE = {
   heroHighlight: 'vibe',
   heroAfter: 'in the city.',
   contactEmail: 'hello@vibeistic.in',
-  // Newsletter form action URL (Mailchimp / MailerLite / Brevo). Leave empty for now.
-  newsletterUrl: 'https://vibeistic.us7.list-manage.com/subscribe/post?u=285b800a8a4fb81d3d889e07c&amp;id=dedbb51b85&amp;f_id=00edbae4f0',
+  // Newsletter form action URL (Mailchimp)
+  newsletterUrl: 'https://vibeistic.us7.list-manage.com/subscribe/post?u=285b800a8a4fb81d3d889e07c&id=dedbb51b85&f_id=00edbae4f0',
   instagram: 'https://instagram.com/_vibeistic',
   youtube: 'https://youtube.com/@vibeistic',
 };
@@ -38,12 +38,12 @@ export const PILLARS: Record<PillarKey, {
   name: string; hi: string; icon: string; sub: string;
   factors: [string, string, string]; color: string; bg: string;
 }> = {
-  eat:    { name: 'Eat',    hi: 'Khao',    icon: '🍛', sub: 'Restaurants, thalis & street food', factors: ['Taste', 'Value', 'Hygiene'],         color: '#f2994a', bg: '#f2994a,#ff5e7e' },
-  sip:    { name: 'Sip',    hi: 'Piyo',    icon: '☕', sub: 'Cafés, chai & juice bars',          factors: ['Brew', 'Vibe', 'Value'],              color: '#ff5e7e', bg: '#ff5e7e,#ffb238' },
-  travel: { name: 'Travel', hi: 'Ghoomo',  icon: '🧭', sub: 'Places, getaways & treks',          factors: ['Experience', 'Access', 'Value'],      color: '#e09b14', bg: '#ffb238,#f2994a' },
-  pray:   { name: 'Pray',   hi: 'Darshan', icon: '🛕', sub: 'Temples & sacred places',           factors: ['Darshan', 'Cleanliness', 'Calm'],     color: '#5b2a86', bg: '#5b2a86,#c9407a' },
-  play:   { name: 'Play',   hi: 'Khelo',   icon: '⚽', sub: 'Gyms, turfs & sports',              factors: ['Facilities', 'Crowd', 'Value'],       color: '#2e9e6b', bg: '#2e9e6b,#8fd18a' },
-  stay:   { name: 'Stay',   hi: 'Raho',    icon: '🏨', sub: 'Hotels & homestays',                factors: ['Room', 'Location', 'Value'],          color: '#1f6fb2', bg: '#1f6fb2,#5b2a86' },
+  eat:    { name: 'Eat',    hi: 'Khao',    icon: '🍛', sub: 'Restaurants, thalis & street food', factors: ['Taste', 'Value', 'Hygiene'],     color: '#f2994a', bg: '#f2994a,#ff5e7e' },
+  sip:    { name: 'Sip',    hi: 'Piyo',    icon: '☕', sub: 'Cafés, chai & juice bars',          factors: ['Brew', 'Vibe', 'Value'],          color: '#ff5e7e', bg: '#ff5e7e,#ffb238' },
+  travel: { name: 'Travel', hi: 'Ghoomo',  icon: '🧭', sub: 'Places, getaways & treks',          factors: ['Experience', 'Access', 'Value'],  color: '#e09b14', bg: '#ffb238,#f2994a' },
+  pray:   { name: 'Pray',   hi: 'Darshan', icon: '🛕', sub: 'Temples & sacred places',           factors: ['Darshan', 'Cleanliness', 'Calm'], color: '#5b2a86', bg: '#5b2a86,#c9407a' },
+  play:   { name: 'Play',   hi: 'Khelo',   icon: '⚽', sub: 'Gyms, turfs & sports',              factors: ['Facilities', 'Crowd', 'Value'],   color: '#2e9e6b', bg: '#2e9e6b,#8fd18a' },
+  stay:   { name: 'Stay',   hi: 'Raho',    icon: '🏨', sub: 'Hotels & homestays',                factors: ['Room', 'Location', 'Value'],      color: '#1f6fb2', bg: '#1f6fb2,#5b2a86' },
 };
 export const PILLAR_KEYS = Object.keys(PILLARS) as PillarKey[];
 
@@ -56,8 +56,7 @@ export const FOOTER_LINKS = [
   { label: 'Disclaimer', href: '/disclaimer/' },
 ];
 
-
-// ---------------- Goog****nalytics 4 ----------------
-expor**const ANALYTICS = {
+// ---------------- Google Analytics 4 ----------------
+export const ANALYTICS = {
   gaId: 'G-WQ2VYEC1XV',
 };
