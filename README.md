@@ -129,3 +129,10 @@ const loa*** = !!gaId && !import.meta.env.DEV**---
   <script is:inline src="/js/main.js" defer></script>
 </body>
 </html>
+
+
+
+// ---------------- Goog****nalytics 4 ----------------
+expor**const ANALYTICS = {
+  gaId: 'G-X**XXXXXXX',
+};
