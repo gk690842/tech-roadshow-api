@@ -1,26 +1,14 @@
-python -c "import feedparser; f=feedparser.parse('https://www.reddit.com/r/nottheonion/rising/.rss', agent='ufd-agent/1.0'); [print('•', e.title[:70]) for e in f.entries[:5]]"
-
-open -e test_setup.py
-
-import os, requests, boto3, feedparser, ollama
-
-check("Reddit RSS", lambda: [e.title[:50] for e in feedparser.parse(
-    "https://www.reddit.com/r/nottheonion/rising/.rss", agent="ufd-agent/1.0").entries[:2]])
-
-python test_setup.py
-
-step 4:
-
-open -e config/sources.yaml	
-
-reddit_rss:
-  - https://www.reddit.com/r/nottheonion/rising/.rss
-  - https://www.reddit.com/r/interestingasfuck/rising/.rss
-  - https://www.reddit.com/r/Damnthatsinteresting/rising/.rss
-  - https://www.reddit.com/r/india/rising/.rss
-  - https://www.reddit.com/r/worldnews/rising/.rss
-  - https://www.reddit.com/r/IndiaSpeaks/rising/.rss
-poll_minutes: 10
-
-
-python -c "import requests; r=requests.get('https://www.reddit.com/r/nottheonion/rising/.rss', headers={'User-Agent':'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36'}, timeout=15); print('Status:', r.status_code); print('Starts with:', r.text[:80])"
+python -c "
+import feedparser, requests
+UA={'User-Agent':'Mozilla/5.0 (Macintosh) Chrome/124.0'}
+for u in ['https://trends.google.com/trending/rss?geo=IN',
+          'https://news.google.com/rss?hl=en-IN&gl=IN&ceid=IN:en',
+          'https://news.google.com/rss/search?q=bizarre+OR+weird+OR+viral&hl=en-IN&gl=IN&ceid=IN:en',
+          'https://feeds.bbci.co.uk/news/world/rss.xml',
+          'https://feeds.feedburner.com/ndtvnews-top-stories',
+          'https://hnrss.org/frontpage']:
+    try:
+        f=feedparser.parse(requests.get(u,headers=UA,timeout=15).content)
+        print('✅' if f.entries else '❌', len(f.entries), 'items -', u[:60])
+    except Exception as e: print('❌', u[:60], e)
+"
