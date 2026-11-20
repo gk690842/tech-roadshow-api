@@ -21,3 +21,6 @@ reddit_rss:
   - https://www.reddit.com/r/worldnews/rising/.rss
   - https://www.reddit.com/r/IndiaSpeaks/rising/.rss
 poll_minutes: 10
+
+
+python -c "import requests; r=requests.get('https://www.reddit.com/r/nottheonion/rising/.rss', headers={'User-Agent':'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36'}, timeout=15); print('Status:', r.status_code); print('Starts with:', r.text[:80])"
