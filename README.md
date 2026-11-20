@@ -1,11 +1,23 @@
-step 1:
+python -c "import feedparser; f=feedparser.parse('https://www.reddit.com/r/nottheonion/rising/.rss', agent='ufd-agent/1.0'); [print('•', e.title[:70]) for e in f.entries[:5]]"
 
-CODE=$(python3 -c "import sys,urllib.parse as u; print(u.parse_qs(u.urlparse(sys.argv[1]).query)['code'][0])" "$URL")
+open -e test_setup.py
 
-step 2:
+import os, requests, boto3, feedparser, ollama
 
-echo "Code length: ${#CODE}"; echo "App ID: $APP_ID"; echo "Secret length: ${#APP_SECRET}"
+check("Reddit RSS", lambda: [e.title[:50] for e in feedparser.parse(
+    "https://www.reddit.com/r/nottheonion/rising/.rss", agent="ufd-agent/1.0").entries[:2]])
 
-step 3:
+python test_setup.py
 
-curl -s -G "https://graph.facebook.com/v25.0/oauth/access_token" --data-urlencode "client_id=$APP_ID" --data-urlencode "client_secret=$APP_SECRET" --data-urlencode "redirect_uri=https://www.google.com/" --data-urlencode "code=$CODE"
+step 4:
+
+open -e config/sources.yaml	
+
+reddit_rss:
+  - https://www.reddit.com/r/nottheonion/rising/.rss
+  - https://www.reddit.com/r/interestingasfuck/rising/.rss
+  - https://www.reddit.com/r/Damnthatsinteresting/rising/.rss
+  - https://www.reddit.com/r/india/rising/.rss
+  - https://www.reddit.com/r/worldnews/rising/.rss
+  - https://www.reddit.com/r/IndiaSpeaks/rising/.rss
+poll_minutes: 10
