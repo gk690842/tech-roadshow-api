@@ -1,5 +1,5 @@
-printf 'rss: ["https://trends.google.com/trending/rss?geo=IN", "https://news.google.com/rss?hl=en-IN&gl=IN&ceid=IN:en", "https://news.google.com/rss/headlines/section/topic/WORLD?hl=en-IN&gl=IN&ceid=IN:en", "https://news.google.com/rss/search?q=bizarre+OR+weird+OR+viral&hl=en-IN&gl=IN&ceid=IN:en", "https://feeds.bbci.co.uk/news/world/rss.xml", "https://feeds.feedburner.com/ndtvnews-top-stories", "https://hnrss.org/frontpage"]\nyoutube_trending_region: IN\npoll_minutes: 10\n' > config/sources.yaml
+LONG=$(curl -s -G "https://graph.facebook.com/v25.0/oauth/access_token" --data-urlencode "grant_type=fb_exchange_token" --data-urlencode "client_id=$APP_ID" --data-urlencode "client_secret=$APP_SECRET" --data-urlencode "fb_exchange_token=$SHORT" | python3 -c "import sys,json; d=json.load(sys.stdin); print(d.get('access_token') or d)")
 
-python -c "import yaml; d=yaml.safe_load(open('config/sources.yaml')); print('✅ YAML OK -', len(d['rss']), 'feeds')"
+echo "${LONG:0:10}... length ${#LONG}"
 
-sed -i '' '/check("Reddit RSS", reddit)/d' test_setup.py
+curl -s -G "https://graph.facebook.com/v25.0/me/accounts" --data-urlencode "fields=name,access_token,instagram_business_account{id,username}" --data-urlencode "access_token=$LONG" | python3 -m json.tool
